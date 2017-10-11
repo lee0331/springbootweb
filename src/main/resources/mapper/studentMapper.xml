@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.dao.StudentMapper">
+
+	<!-- 使用 set 元素 -->
+	<update id="updateStudent" parameterType="com.boot.domain.Student">
+		update student 
+		<set>
+			<if test="name != null and name != ''">
+				name=#{name},
+			</if>
+			<if test="age != null and age != ''">
+				age=#{age},
+			</if>
+			<if test="sex != null and sex != ''">
+				sex=#{sex},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<!-- 使用 foreach 元素 -->
+	<select id="finaStudentInSex" resultType="com.boot.domain.Student">
+		select * from student where sex in
+		<foreach open="(" close=")" separator="," collection="list" item="sex_l">
+			#{sex_l}
+		</foreach>
+	</select>
+	
+	<resultMap type="com.boot.domain.Student" id="students">
+		<id column="id" property="id" jdbcType="CHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="age" property="age" jdbcType="TINYINT" />
+		<result column="sex" property="sex" jdbcType="CHAR" />
+	</resultMap>
+	<select id="getAllStudent" resultMap="students">
+		select * from student
+	</select>
+	
+	<insert id="insertStudent" parameterType="com.boot.domain.Student">
+		insert into student(id,name,age,sex) value(#{id},#{name},#{age},#{sex})
+	</insert>
+	
+	<!-- 一对多级联 start -->
+	<select id="getCourse" parameterType="int" resultType="com.boot.domain.Course">
+		select id, course_name as courseName, note from student_course where id = #{id}
+	</select>
+	<resultMap id="courseScoreMap" type="com.boot.domain.CourseScore">
+		<id property="id" column="id"/>
+		<result property="studentId" column="student_id"/>
+		<result property="score" column="score"/>
+		<!--将查询出来的course_id交给CouseMapper来查询出具体课程信息-->
+		<association property="course" column="course_id" select="com.boot.dao.StudentMapper.getCourse" />
+	</resultMap>
+	<select id="findCourseScoreByStudentId" parameterType="int" resultMap="courseScoreMap">
+		select id, student_id, course_id, score from student_score where student_id = #{id}
+	</select>
+	
+	<resultMap type="com.boot.domain.StudentCard" id="studentSelfCardMap">
+		<id property="id" column="id"/>
+		<result property="studentId" column="student_id"/>
+		<result property="note" column="note"/>
+	</resultMap>
+	<select id="findSelfCardByStudentId" parameterType="int" resultMap="studentSelfCardMap">
+		select id, student_id, note from student_card where student_id = #{id}
+	</select>
+	
+	<resultMap type="com.boot.domain.Student" id="studentMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="sex" column="sex"/>
+		<association property="studentCard" column="id" select="com.boot.dao.StudentMapper.findSelfCardByStudentId"/>
+		<collection property="courseScoreList" column="id" select="com.boot.dao.StudentMapper.findCourseScoreByStudentId" />
+	</resultMap>
+	<select id="getStudent" parameterType="int" resultMap="studentMap">
+		select id, name, sex from student where id = #{id}
+	</select>
+	<!-- 一对多级联 end -->
+</mapper>
