@@ -1,0 +1,25 @@
+<!DOCTYPE html>  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>首页</title>
+</head>
+<body>
+	ID：<font th:text="${student.id }"></font><br/>
+	姓名：<font th:text="${student.name }"></font><br/>
+	年龄：<font th:text="${student.age }"></font><br/>
+	性别：<font th:text="${student.sex }"></font><br/><br/>
+	
+	ID：<font th:text="${student.studentCard.studentId }"></font><br/>
+	备注：<font th:text="${student.studentCard.note }"></font><br/><br/>
+	
+	<font th:each="courseScore : ${student.courseScoreList }">
+		成绩ID：<font th:text="${courseScore.id}"></font><br/>
+		ID：<font th:text="${courseScore.studentId}"></font><br/>
+		课程名称：<font th:text="${courseScore.course.courseName}"></font><br/>
+		课程备注：<font th:text="${courseScore.course.note}"></font><br/>
+		分数：<font th:text="${courseScore.score}"></font><br/>
+		--------------------------------------------------<br/>
+	</font>
+</body>
+</html>

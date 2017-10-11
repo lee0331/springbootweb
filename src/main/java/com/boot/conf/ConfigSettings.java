@@ -1,10 +1,12 @@
 package com.boot.conf;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "book")
+@PropertySource(value = "classpath:/book.properties")
 public class ConfigSettings {
 	
 	private String name;

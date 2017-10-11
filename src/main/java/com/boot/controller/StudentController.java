@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.boot.domain.Student;
@@ -37,10 +38,11 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value = "/getStudent", method = RequestMethod.GET)
-	public @ResponseBody String getStudent(int id) {
+	public ModelAndView getStudent(int id) {
 		Student s = studentService.getStudent(id);
-		logger.debug(s.toString());
-		return JSON.toJSONString(s);
+		ModelAndView model = new ModelAndView("index");
+		model.addObject("student", s);
+		return model;
 	}
 
 	@RequestMapping(value = "/updateStudent", method = RequestMethod.GET)
