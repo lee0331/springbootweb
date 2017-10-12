@@ -39,7 +39,7 @@
 	</select>
 	
 	<insert id="insertStudent" parameterType="com.boot.domain.Student">
-		insert into student(id,name,age,sex) value(#{id},#{name},#{age},#{sex})
+		insert into student(name,age,sex) value(#{name},#{age},#{sex})
 	</insert>
 	
 	<!-- 一对多级联 start -->

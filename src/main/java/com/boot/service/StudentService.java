@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.boot.dao.StudentMapper;
 import com.boot.domain.Student;
@@ -19,8 +20,13 @@ public class StudentService {
 		return studentMapper.getAllStudent();
 	}
 	
+	@Transactional(rollbackFor = IllegalArgumentException.class)
 	public int insertStudent(Student student){
-		return studentMapper.insertStudent(student);
+		studentMapper.insertStudent(student);
+		if(true) {
+			throw new IllegalArgumentException("存在了...");
+		}
+		return 1;
 	}
 	
 	public int updateStudent(Student s) {
