@@ -30,4 +30,23 @@ com.boot.conf.ConfigSettings
 	2.在 resources/db/migration 中加入 VYYY__XXXXXX.sql (YYY:为数字；XXXXXX：随意；中间为两个下划线)
 	3.在 application.properties 中加入：flyway.baselineOnMigrate=true
 	4.执行启动类 启动时 可见 flyway 启动 在 mysql 中 自动创建 schema_version 表 用于记录 sql脚本的变化
-========================================================================================================================			
+========================================================================================================================
+使用 websocket
+	广播形式：
+		1.pom.xml 加入：
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-websocket</artifactId>
+			</dependency>
+		2.创建
+			com.boot.domain.wisely.WiselyMessage 浏览器给服务端发送消息
+			com.boot.domain.wisely.WiselyResponse 服务端给浏览器发送消息
+			com.boot.conf.WebSocketConfig 注册节点 配置消息代理
+			com.boot.conf.WebConfig 默认访问 controller 直接跳转到 html
+		3.创建 ws.html
+		4.创建 com.boot.controller.IndexController
+			public WiselyResponse say(WiselyMessage wiselyMessage)
+				使用 
+				@MessageMapping("/welcome")
+				@SendTo("/topic/getResponse")
+========================================================================================================================
