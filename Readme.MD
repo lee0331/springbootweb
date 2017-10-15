@@ -93,3 +93,11 @@ com.boot.controller
 	@RequestMapping("/jmsSend") JMS 使用 activeMQ 发送消息 并接受  com.boot.msg.MsgJMS.Receiver
 	@RequestMapping("/rabbitSend") JMS 使用 rabbitMQ 发送消息 并接受 com.boot.msg.MsgJMS
 ========================================================================================================================
+spring-boot 实现热部署的方式：
+	pom.xml 加入：
+		<!-- 实现热部署 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+========================================================================================================================
