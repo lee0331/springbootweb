@@ -50,3 +50,46 @@ com.boot.conf.ConfigSettings
 				@MessageMapping("/welcome")
 				@SendTo("/topic/getResponse")
 ========================================================================================================================
+使用JMS
+	pom.xml 加入：
+		<!-- JMS -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jms</artifactId>
+		</dependency>
+	使用activeMQ：
+		1.pom.xml加入：
+			<!-- activeMQ -->
+			<dependency>
+			    <groupId>org.apache.activemq</groupId>
+			    <artifactId>activemq-client</artifactId>
+			    <version>5.15.0</version>
+			</dependency>
+		2.设置代理地址
+			spring.activemq.broker-url=tcp://localhost:61616
+		3.实现 MessageCreator：
+			com.boot.msg.MsgJMS
+		4.设置 JmsTemplate 监听 com.boot.msg.MsgJMS.Receiver.receiverMessage_jms(String message)
+		5.设置 JmsTemplate 发送目的地 com.boot.controller.public @ResponseBody String jmsSend()
+		6.访问：http://localhost:9091/jmsSend
+	使用rabbitMQ：
+		1.pom.xml加入：
+			<!-- rabbitMQ -->
+			<dependency>
+			    <groupId>org.springframework.amqp</groupId>
+			    <artifactId>spring-rabbit</artifactId>
+			</dependency>
+		2.设置 rabbitTemplate 监听目的地 com.boot.msg.MsgJMS.receiverMessage_rabbit(String message) 
+		3.定义目的地（队列）
+			com.boot.msg.MsgJMS
+				@Bean
+				public Queue getQueue() {
+					return new Queue("rabbit-queue");
+				}
+		4.设置rabbitTemplate 发送目的地 com.boot.controller.public @ResponseBody String rabbitSend()
+		5.访问：http://localhost:9091/rabbitSend
+			
+com.boot.controller
+	@RequestMapping("/jmsSend") JMS 使用 activeMQ 发送消息 并接受  com.boot.msg.MsgJMS.Receiver
+	@RequestMapping("/rabbitSend") JMS 使用 rabbitMQ 发送消息 并接受 com.boot.msg.MsgJMS
+========================================================================================================================
