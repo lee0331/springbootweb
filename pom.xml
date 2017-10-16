@@ -46,7 +46,31 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- spring-boot监测 -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-hateoas</artifactId>
+		</dependency>
+        <!-- 实现热部署 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+        
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -61,16 +85,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<!-- json -->
 		<dependency>
@@ -92,27 +106,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-		<!-- JMS -->
-		<dependency>
+		<!-- <dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-jms</artifactId>
 		</dependency>
-		<!-- activeMQ -->
 		<dependency>
 		    <groupId>org.apache.activemq</groupId>
 		    <artifactId>activemq-client</artifactId>
 		    <version>5.15.0</version>
 		</dependency>
-		<!-- rabbitMQ -->
 		<dependency>
 		    <groupId>org.springframework.amqp</groupId>
 		    <artifactId>spring-rabbit</artifactId>
-		</dependency>
-		<!-- 实现热部署 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>
